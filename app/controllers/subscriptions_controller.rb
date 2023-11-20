@@ -1,6 +1,6 @@
 class SubscriptionsController < ApplicationController
   def create
-
+    
   end
   
   def index
