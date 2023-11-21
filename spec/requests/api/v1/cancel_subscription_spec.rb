@@ -18,5 +18,20 @@ RSpec.describe 'Delete subsccription endpoint' do
 
       expect(Subscription.last.status).to eq("canceled")
     end
+
+    it "send an error message if the subscription if not found" do 
+      create(:customer, id: 1)
+      create(:tea, id: 1)
+      create(:subscription, id: 1, customer_id: 1, title: "Single Tea")
+      tea_subscription = TeaSubscription.create(tea_id: 1, subscription_id: 1)
+      request = {
+        "subscription_id": "2",
+        "status" => "1"
+      }
+      patch "/api/v1/cancel_subscription", params: request, as: :json
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+    end
   end
 end

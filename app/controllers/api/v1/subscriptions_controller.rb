@@ -23,11 +23,11 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
   
   def update
-    subscription = Subscription.find(params[:subscription_id])
-    subscription.update(status: params[:status].to_i)
-    if subscription.save
+    begin
+      subscription = Subscription.find(params[:subscription_id])
+      subscription.update(status: params[:status].to_i)
       render json: {message: "Subscription updated successfully"}, status: 200
-    else
+    rescue ActiveRecord::RecordNotFound
       render json: {message: "Subscription not updated, please try again"}, status: 400
     end
   end
