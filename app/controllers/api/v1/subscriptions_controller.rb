@@ -13,13 +13,17 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
   
   def index
-    customer = Customer.find(params[:customer_id])
-    subscriptions = customer.subscriptions
-    if customer && !subscriptions.empty?
-      render json: SubscriptionsSerializer.new(subscriptions), status: 200
-    else
-       render json: {message: "Either the customer does not exist of the customer has no subscriptions"}, status: 400
-    end 
+    begin
+      customer = Customer.find(params[:customer_id])
+      subscriptions = customer.subscriptions
+      if !subscriptions.empty?
+        render json: SubscriptionsSerializer.new(subscriptions), status: 200
+      else
+        render json: {message: "The customer has no subscriptions"}, status: 200
+      end 
+    rescue ActiveRecord::RecordNotFound
+      render json: {message: "Customer not found"}, status: 400
+    end
   end
   
   def update

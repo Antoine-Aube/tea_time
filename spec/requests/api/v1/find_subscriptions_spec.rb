@@ -23,5 +23,26 @@ RSpec.describe 'find a users subsccriptions endpoint' do
       response_body = JSON.parse(response.body, symbolize_names: true)
       expect(response_body[:data].count).to eq(2)
     end 
+
+    it "sends a response with an error if the user does not exist" do 
+      get "/api/v1/subscriptions", params: {customer_id: 1}
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      response_body = JSON.parse(response.body, symbolize_names: true)
+      expect(response_body[:message]).to eq("Customer not found")
+    end
+
+    it "sends a response with an error if the user has no subscriptions" do
+      customer = Customer.create(id: 1, first_name: "John", last_name: "Doe", email: "john@gmail.com", address: "123 John Street")
+      get "/api/v1/subscriptions", params: {customer_id: 1}
+
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
+      
+      response_body = JSON.parse(response.body, symbolize_names: true)  
+      expect(response_body[:message]).to eq("The customer has no subscriptions")
+    end
   end
-end
+end 
