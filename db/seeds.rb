@@ -5,3 +5,13 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+Customer.destroy_all
+Tea.destroy_all
+
+3.times do 
+  FactoryBot.create(:customer)
+end
+
+3.times do 
+  FactoryBot.create(:tea)
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_21_002742) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_21_005923) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,11 +34,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_002742) do
     t.index ["customer_id"], name: "index_subscriptions_on_customer_id"
   end
 
-  create_table "subscriptions_teas", id: false, force: :cascade do |t|
-    t.bigint "subscription_id", null: false
+  create_table "tea_subscriptions", force: :cascade do |t|
     t.bigint "tea_id", null: false
-    t.index ["subscription_id"], name: "index_subscriptions_teas_on_subscription_id"
-    t.index ["tea_id"], name: "index_subscriptions_teas_on_tea_id"
+    t.bigint "subscription_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscription_id"], name: "index_tea_subscriptions_on_subscription_id"
+    t.index ["tea_id"], name: "index_tea_subscriptions_on_tea_id"
   end
 
   create_table "teas", force: :cascade do |t|
@@ -51,6 +53,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_002742) do
   end
 
   add_foreign_key "subscriptions", "customers"
-  add_foreign_key "subscriptions_teas", "subscriptions"
-  add_foreign_key "subscriptions_teas", "teas"
+  add_foreign_key "tea_subscriptions", "subscriptions"
+  add_foreign_key "tea_subscriptions", "teas"
 end
