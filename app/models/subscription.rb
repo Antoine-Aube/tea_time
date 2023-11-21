@@ -6,6 +6,6 @@ class Subscription < ApplicationRecord
   validates :status, presence: true
   validates :frequency, presence: true
 
-  enum status: %w[active cancelled]
+  enum status: %w[active canceled]
   enum frequency: %w[weekly monthly yearly]
 end
