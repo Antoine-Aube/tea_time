@@ -1,13 +1,13 @@
 class Api::V1::SubscriptionsController < ApplicationController
   def create
     request_body = JSON.parse(request.body.read, symbolize_names: true)
-    customer = Customer.find(params[:customer_id])
-    tea = Tea.find(params[:tea_id])
-    subscription = customer.subscriptions.create(title: request_body[:title])
-    tea_subscription = TeaSubscription.create(tea_id: tea.id, subscription_id: subscription.id)
-    if subscription.save && tea_subscription.save
+    begin
+      customer = Customer.find(params[:customer_id])
+      tea = Tea.find(params[:tea_id])
+      subscription = customer.subscriptions.create(title: request_body[:title])
+      tea_subscription = TeaSubscription.create(tea_id: tea.id, subscription_id: subscription.id)
       render json: {message: "Subscription created successfully"}, status: 201
-    else
+    rescue ActiveRecord::RecordNotFound
       render json: {message: "Subscription not created, please try again"}, status: 400
     end
   end
