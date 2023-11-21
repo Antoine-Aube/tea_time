@@ -4,7 +4,7 @@ class Api::V1::SubscriptionsController < ApplicationController
     customer = Customer.find(params[:customer_id])
     tea = Tea.find(params[:tea_id])
     subscription = customer.subscriptions.create(title: request_body[:title])
-    tea_subscription = TeaSubscriptions.create(tea_id: tea.id, subscription_id: subscription.id)
+    tea_subscription = TeaSubscription.create(tea_id: tea.id, subscription_id: subscription.id)
     if subscription.save && tea_subscription.save
       render json: {message: "Subscription created successfully"}, status: 201
     else
@@ -13,7 +13,13 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
   
   def index
-    
+    customer = Customer.find(params[:customer_id])
+    subscriptions = customer.subscriptions
+    if customer && !subscriptions.empty?
+      render json: SubscriptionsSerializer.new(subscriptions), status: 200
+    else
+       render json: {message: "Either the customer does not exist of the customer has no subscriptions"}, status: 400
+    end 
   end
   
   def update
