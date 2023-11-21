@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+  get "/api/v1/subscriptions", to: "api/v1/subscriptions#index"
   post "/api/v1/subscribe", to: "api/v1/subscriptions#create"
   patch "/api/v1/cancel_subscription", to: "api/v1/subscriptions#update"
-  get "/api/v1/subscriptions", to: "api/v1/subscriptions#index"
 
 end

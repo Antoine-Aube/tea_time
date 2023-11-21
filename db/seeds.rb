@@ -21,5 +21,5 @@ tea1 = Tea.create(title: "Green Tea", description: "Green tea", temperature: 75,
 tea2 = Tea.create(title: "Blue Tea", description: "blue tea", temperature: 90, brew_time: 5)
 subscription1 = Subscription.create(customer_id: customer4.id, title: "Single Tea")
 subscription2 = Subscription.create(customer_id: customer4.id, title: "Single Tea")
-tea_subscription1 = TeaSubscription.create(tea_id: tea1.id, subscription_id: subscription1.id)
-tea_subscription2 = TeaSubscription.create(tea_id: tea2.id, subscription_id: subscription2.id)
+tea_subscription1 = TeaSubscriptions.create(tea_id: tea1.id, subscription_id: subscription1.id)
+tea_subscription2 = TeaSubscriptions.create(tea_id: tea2.id, subscription_id: subscription2.id)

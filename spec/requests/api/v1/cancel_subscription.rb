@@ -6,7 +6,7 @@ RSpec.describe 'Delete subsccription endpoint' do
       create(:customer, id: 1)
       create(:tea, id: 1)
       create(:subscription, id: 1, customer_id: 1, title: "Single Tea")
-      tea_subscription = TeaSubscriptions.create(tea_id: 1, subscription_id: 1)
+      tea_subscription = TeaSubscription.create(tea_id: 1, subscription_id: 1)
       request = {
         "subscription_id": "1",
         "status" => "1"
