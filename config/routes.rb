@@ -3,4 +3,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  post "/subscribe", to: "subscriptions#create"
+  patch "/cancel_subscription", to: "subscriptions#cancel"
+  get "/subscriptions", to: "subscriptions#index"
+
 end
