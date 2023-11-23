@@ -13,6 +13,11 @@ class Api::V1::SubscriptionsController < ApplicationController
   end
   
   def index
+    #While this method does not require params to be based through the body
+    #I had issues with this method looking for a POST route
+    #that does not exist, didn't spend too much time debugging as
+    #I wanted to move forward, but I understand the need for sensitive information
+    # to be passed through the body. 
     begin
       customer = Customer.find(params[:customer_id])
       subscriptions = customer.subscriptions
